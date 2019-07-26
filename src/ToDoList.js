@@ -6,18 +6,24 @@ class ToDoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [{task: "Walk the Fish"},{ task: "Groom the Chickens"}]
+      todos: []
     };
     this.create = this.create.bind(this);
+    this.remove = this.remove.bind(this);
   }
   create(newToDo) {
     this.setState({
       todos: [...this.state.todos, newToDo]
     });
   }
+  remove(id) {
+    this.setState({
+      todos: this.state.todos.filter(td => td.id !== id)
+    });
+  }
   render() {
     const todos = this.state.todos.map(todo => {
-      return <ToDo task={todo.task}/>
+      return <ToDo key={todo.id} id={todo.id} task={todo.task} removeToDo={this.remove}/>
     })
     return (
       <div>
